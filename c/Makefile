@@ -17,7 +17,7 @@ endef
 
 # Creates an obj file from a given C file
 define mk_c_rule
-$(patsubst %.c,$(BUILD_DIR)/%.o,$(notdir $(1))): $(1)
+$(patsubst %.c,$(BUILD_DIR)/%.o,$(notdir $(1))): $(1) | $(BUILD_DIR)
 	mkdir -p $(BUILD_DIR)
 	$(CC) $(CFLAGS) $$^ -c -o $$@
 endef
@@ -33,6 +33,10 @@ OBJ_FILES := $(call get_obj,$(SOURCES))
 
 # Build all
 all: $(TARGETS)
+
+# Create build directory if it doesn't exist
+$(BUILD_DIR):
+	mkdir -p $@
 
 # Build object files
 $(foreach f, $(SOURCES), $(eval $(call mk_c_rule, $(f))))
