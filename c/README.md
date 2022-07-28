@@ -2,7 +2,7 @@
 
 ## Basic Usage
 1. Copy the Makefile into the root of your project directory
-2. Put all your `*.c` and `*.h` files into `${PROJECT_DIR}/src`
+2. Put all your `*.c` and `*.h` files into `${PROJECT_DIR}/src`. Any folder structure within `src` will work completely fine.
 3. Run `make`
 
 ## Details
