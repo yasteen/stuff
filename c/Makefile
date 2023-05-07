@@ -1,5 +1,6 @@
 CC=gcc
 CFLAGS=-Wall
+LDFLAGS=
 
 SOURCE_DIR=src
 BUILD_DIR=objs
@@ -43,7 +44,7 @@ $(foreach f, $(SOURCES), $(eval $(call mk_c_rule, $(f))))
 
 # Build executable
 $(TARGETS): $(OBJ_FILES)
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ -o $@
+	$(CC) $^ $(CFLAGS) $(LDFLAGS) -o $@
 
 clean:
 	rm -f $(TARGETS)
