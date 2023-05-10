@@ -1,4 +1,6 @@
 CC=gcc
+EXTENSION = c
+
 CFLAGS=-Wall
 LDFLAGS=
 
@@ -6,19 +8,19 @@ SOURCE_DIR=src
 BUILD_DIR=objs
 
 TARGET ?= main
-SOURCES := $(shell find $(SOURCE_DIR) -name '*.c')
+SOURCES := $(shell find $(SOURCE_DIR) -name '*.$(EXTENSION)')
 
 
 # --- FUNCTIONS --- #
 
 # Gets corresponding object files from  c file(s)
 define get_obj
-	$(patsubst %.c,$(BUILD_DIR)/%.o,$(notdir $(1)))
+	$(patsubst %.$(EXTENSION),$(BUILD_DIR)/%.o,$(notdir $(1)))
 endef
 
 # Creates an obj file from a given C file
 define mk_c_rule
-$(patsubst %.c,$(BUILD_DIR)/%.o,$(notdir $(1))): $(1) | $(BUILD_DIR)
+$(patsubst %.$(EXTENSION),$(BUILD_DIR)/%.o,$(notdir $(1))): $(1) | $(BUILD_DIR)
 	mkdir -p $(BUILD_DIR)
 	$(CC) $(CFLAGS) $$^ -c -o $$@
 endef
