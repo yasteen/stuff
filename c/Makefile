@@ -21,7 +21,6 @@ endef
 # Creates an obj file from a given C file
 define mk_c_rule
 $(patsubst %.$(EXTENSION),$(BUILD_DIR)/%.o,$(notdir $(1))): $(1) | $(BUILD_DIR)
-	mkdir -p $(BUILD_DIR)
 	$(CC) $(CFLAGS) $$^ -c -o $$@
 endef
 
