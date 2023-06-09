@@ -11,8 +11,12 @@ This Makefile scans the source directory for `*.c` files, and creates object
 files for each one in an `objs` directory. Then it compiles everything down
 into a single binary.
 
+We also create `objs/%.d` dependency files, which allow recompilation whenever
+a header file is changed.
+
 ## Easily configurable parameters
 - `CC`
+- `EXTENSION`
 - `CFLAGS`
 - `LDFLAGS`
 - `SOURCE_DIR`
