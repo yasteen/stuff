@@ -13,15 +13,18 @@ SOURCES := $(shell find $(SOURCE_DIR) -name '*.$(EXTENSION)')
 
 # --- FUNCTIONS --- #
 
-# Gets corresponding object files from  c file(s)
+# Gets corresponding object and dependency files from source files
 define get_obj
 	$(patsubst %.$(EXTENSION),$(BUILD_DIR)/%.o,$(notdir $(1)))
+endef
+define get_dep
+	$(patsubst %.$(EXTENSION),$(BUILD_DIR)/%.d,$(notdir $(1)))
 endef
 
 # Creates an obj file from a given C file
 define mk_c_rule
 $(patsubst %.$(EXTENSION),$(BUILD_DIR)/%.o,$(notdir $(1))): $(1) | $(BUILD_DIR)
-	$(CC) $(CFLAGS) $$^ -c -o $$@
+	$(CC) $(CFLAGS) -MMD -MP -c $$< -o $$@
 endef
 
 
@@ -29,6 +32,7 @@ endef
 
 # List of all relevant object files
 OBJ_FILES := $(call get_obj,$(SOURCES))
+DEP_FILES := $(call get_dep,$(SOURCES))
 
 
 # --- BUILD RULES --- #
@@ -41,6 +45,7 @@ $(BUILD_DIR):
 	mkdir -p $@
 
 # Build object files
+-include $(DEP_FILES)
 $(foreach f, $(SOURCES), $(eval $(call mk_c_rule, $(f))))
 
 # Build executable
